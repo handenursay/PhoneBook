@@ -1,0 +1,70 @@
+﻿@model List<MemberPhoneVM>
+@{
+    ViewData["Title"] = "Phones";
+}
+
+
+
+@if (TempData["PhoneAddSuccessMsg"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>BİLGİ!</strong> @TempData["PhoneAddSuccessMsg"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <br />
+}
+<h1>Rehberiniz</h1>
+
+<br />
+
+<div class="row">
+    <a href="/Home/PhoneAdd"  class="btn btn-primary">Rehbere Ekle</a>
+</div>
+
+
+
+
+
+
+@if (!string.IsNullOrEmpty(ViewBag.PhonesPageMsg))
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>DİKKAT!</strong> @ViewBag.PhonesPageMsg
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}else
+{
+
+      <div class="row">
+          <table class="table table-hover">
+              <tr>
+                  <th>Kategori</th>
+                  <th>İsim Soyisim</th>
+                  <th>İşlemler</th>
+              </tr>
+              @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.PhoneGroup?.Name</td>
+                    <td>@item.PhoneGroupNameSurname</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>
+                        <input type="button" class="btn btn-sm btn-default" 
+                        style="background-color:pink;color:black"
+                        value="Düzenle" asp-controller="Home" asp-action="EditPhone" asp-route-id="@item.Id"/>
+
+
+                        <button type="button" class="btn  btn-sm btn-danger"
+                            asp-controller="Home" asp-action="DeletePhone" asp-route-id="@item.Id">Butonla Sil</button>
+
+                        <a href="/Home/DeletePhone/@item.Id" class="btn  btn-sm btn-info">Link a ile Sil</a>
+
+                    </td>
+                </tr>
+            }
+
+
+          </table>
+      </div>
+}
+
